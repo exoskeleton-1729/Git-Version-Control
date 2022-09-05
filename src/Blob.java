@@ -24,9 +24,15 @@ public class Blob {
 		if (!newFile.exists()){
 			newFile.mkdirs();
 		}*/
-		//PrintWriter writer=new PrintWriter(newFile);
+		PrintWriter writer=new PrintWriter(newFile);
 		
-		
+		 char nextChar=(char) reader.read();
+	     while((int)nextChar!=-1&&(int)nextChar!=65535){
+	    	 writer.write(nextChar);
+	    	 nextChar=(char) reader.read();
+	     }
+	   writer.close();
+	   reader.close();
 	}
 	
 	public static String encryptThisString(String input)//from geeksforgeeks
