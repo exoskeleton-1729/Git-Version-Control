@@ -6,5 +6,6 @@ public class IndexTester {
 		// TODO Auto-generated method stub
 		Index indy=new Index();
 		indy.init();
+		indy.add("something.txt");
 	}
 }
