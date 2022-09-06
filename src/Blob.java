@@ -9,72 +9,49 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Blob {
+	String sha1Name="";
 	public Blob(String fileName) throws IOException {
-		File myFile = new File(fileName);
-		System.out.println(myFile.exists());
+		File myFile = new File("./tests/"+fileName);
+		//System.out.println(myFile.exists());
 		BufferedReader reader = new BufferedReader(new FileReader(myFile));
-		System.out.println(myFile.getName());
-		//String content = null;
+		//System.out.println(myFile.getName());
+		String content="";
 		
+		char nextChar = (char) reader.read();
+		while ((int) nextChar != -1 && (int) nextChar != 65535) {
+			//writer.print(nextChar);
+			content+=nextChar;
+			nextChar = (char) reader.read();
+		}
+		//System.out.println(content);
 		
-		
-		String sha1Name = encryptThisString(myFile.getName());
+		//convert content to sha1
+		sha1Name = encryptThisString(content);
 
 		// creates new file in objects folder
 		File newFile = new File("/Users/kensukeshimojo/eclipse-workspace/Prerequisites/tests/objects/" + sha1Name);
 		newFile.getParentFile().mkdirs();
 		newFile.createNewFile();
 		
-		
-		
-		
+		//./ does relative file paths, but just owwrry about htat later, make them suffer >:)
+
 		
 		/**
 		 * if (!newFile.exists()){ newFile.mkdirs(); }
 		 */
+		
 		PrintWriter writer = new PrintWriter(newFile);
-char nextChar = (char) reader.read();
-		while ((int) nextChar != -1 && (int) nextChar != 65535) {
-			writer.print(nextChar);
-			nextChar = (char) reader.read();
-		}
+		writer.print(content);
 		
 		writer.close();
 		reader.close();
 	}
+	public String getSha1Name() {
+		return sha1Name;
+	}
 	
 	
-	// from http://www.java2s.com/example/java/security/get-sha1-hash-for-file.html
-	public static String getSHA1(File file) throws IOException {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA1");
-            FileInputStream fis = new FileInputStream(file);
-            byte[] dataBytes = new byte[1024];
-
-            int nread = 0;
-
-            while ((nread = fis.read(dataBytes)) != -1) {
-                md.update(dataBytes, 0, nread);
-            }
-            ;
-
-            byte[] mdbytes = md.digest();
-
-            //convert the byte to hex format
-            StringBuffer sb = new StringBuffer("");
-            for (int i = 0; i < mdbytes.length; i++) {
-                sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16)
-                        .substring(1));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-	
-	
-	public static String encryptThisString(String input)// from geeksforgeeks
+	private static String encryptThisString(String input)// from geeksforgeeks
 	{
 		try {
 			// getInstance() method is called with algorithm SHA-1
