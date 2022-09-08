@@ -7,5 +7,7 @@ public class IndexTester {
 		Index indy=new Index();
 		indy.init();
 		indy.add("something.txt");
+		indy.add("another.txt");
+		indy.remove("another.txt");
 	}
 }

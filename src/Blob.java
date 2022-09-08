@@ -29,7 +29,7 @@ public class Blob {
 		sha1Name = encryptThisString(content);
 
 		// creates new file in objects folder
-		File newFile = new File("/Users/kensukeshimojo/eclipse-workspace/Prerequisites/tests/objects/" + sha1Name);
+		File newFile = new File("./tests/objects/" + sha1Name);
 		newFile.getParentFile().mkdirs();
 		newFile.createNewFile();
 		
