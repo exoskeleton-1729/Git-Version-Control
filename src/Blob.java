@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 public class Blob {
 	String sha1Name="";
 	public Blob(String fileName) throws IOException {
-		File myFile = new File("./tests/"+fileName);
+		File myFile = new File(".\\tests\\"+fileName);
 		//System.out.println(myFile.exists());
 		BufferedReader reader = new BufferedReader(new FileReader(myFile));
 		//System.out.println(myFile.getName());
