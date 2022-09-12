@@ -1,11 +1,17 @@
 
 // Import the File class
 import java.io.*;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.Inflater;
+import java.util.zip.InflaterOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import java.nio.Buffer;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -57,33 +63,34 @@ public class Blob {
 		return sha1Name;
 	}
 	
-	public static String compress(String str) throws IOException {
-        if (str == null || str.length() == 0) {
-            return str;
-        }
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        GZIPOutputStream gzip = new GZIPOutputStream(out);
-        gzip.write(str.getBytes());
-        gzip.close();
-        return out.toString("ISO-8859-1");
-    }
+	public String compress(String str) throws UnsupportedEncodingException {
+	// deflater object is created
+	        Deflater def = new Deflater(); 
+	        // get the string to be compressed 
+	        String finalStr = ""; 
+	        // This loop will create a final strig to be compressed by                          
+	        for (int i = 0; i < 3; i++) {
+            finalStr += str; 
+		}	
+		        // set the input for deflator by converting it into bytes 
+		        def.setInput(finalStr.getBytes("UTF-8")); 
+	        // finish.The finished() function in the Inflater class returns true when it reaches the end of compression data stream.
+	       def.finish(); 
+		        // output string data in bytes 
+	       	byte compString[] = new byte[1024]; 
+		        // compressed string data will be stored in compString, offset is set to 3 and maximum size of compressed string is 13. 
+	        int compSize = def.deflate(compString, 3, 13, Deflater.FULL_FLUSH); 
+		        // Final compressed String 
+	       //System.out.println("Compressed String :" + new String(compString) + "\n Size :" + compSize); 
+  
+        // original String is printed for reference 
+		        //System.out.println("Original String :" + finalStr + "\n Size :" + finalStr.length()); 
+      // object end 
+	        def.end();
+			return new String(compString); 
+	    }
 	
-	public static String decompress(String str) throws Exception {
-	    if (str == null || str.length() == 0) {
-	        return str;
-	    }
-	    //System.out.println("Input String length : " + str.length());
-	    GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(str.getBytes("UTF-8")));
-	    BufferedReader bf = new BufferedReader(new InputStreamReader(gis, "UTF-8"));
-	    String outStr = "";
-	    String line;
-	    while ((line=bf.readLine())!=null) {
-	        outStr += line;
-	    }
-	    //System.out.println("Output String lenght : " + outStr.length());
-	    return outStr;
-	}
+	
 	
 	
 	private static String encryptThisString(String input)// from geeksforgeeks
