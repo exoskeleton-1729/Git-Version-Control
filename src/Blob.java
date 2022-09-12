@@ -1,7 +1,10 @@
 
 // Import the File class
 import java.io.*;
-
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import java.nio.Buffer;
 import java.util.*;
 import java.math.BigInteger;
@@ -15,18 +18,21 @@ public class Blob {
 		//System.out.println(myFile.exists());
 		BufferedReader reader = new BufferedReader(new FileReader(myFile));
 		//System.out.println(myFile.getName());
+		
 		String content="";
 		
 		char nextChar = (char) reader.read();
-		while ((int) nextChar != -1 && (int) nextChar != 65535) {
+		while ((int) nextChar != -1 && (int) nextChar != 65535) {//store content in content string
 			//writer.print(nextChar);
 			content+=nextChar;
 			nextChar = (char) reader.read();
 		}
 		//System.out.println(content);
+		String zippedContent=compress(content);
+		//System.out.println(zippedContent);
 		
 		//convert content to sha1
-		sha1Name = encryptThisString(content);
+		sha1Name = encryptThisString(zippedContent);
 
 		// creates new file in objects folder
 		File newFile = new File("./tests/objects/" + sha1Name);
@@ -41,13 +47,42 @@ public class Blob {
 		 */
 		
 		PrintWriter writer = new PrintWriter(newFile);
-		writer.print(content);
+		writer.print(zippedContent);
 		
 		writer.close();
 		reader.close();
 	}
+	
 	public String getSha1Name() {
 		return sha1Name;
+	}
+	
+	public static String compress(String str) throws IOException {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        GZIPOutputStream gzip = new GZIPOutputStream(out);
+        gzip.write(str.getBytes());
+        gzip.close();
+        return out.toString("ISO-8859-1");
+    }
+	
+	public static String decompress(String str) throws Exception {
+	    if (str == null || str.length() == 0) {
+	        return str;
+	    }
+	    //System.out.println("Input String length : " + str.length());
+	    GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(str.getBytes("UTF-8")));
+	    BufferedReader bf = new BufferedReader(new InputStreamReader(gis, "UTF-8"));
+	    String outStr = "";
+	    String line;
+	    while ((line=bf.readLine())!=null) {
+	        outStr += line;
+	    }
+	    //System.out.println("Output String lenght : " + outStr.length());
+	    return outStr;
 	}
 	
 	
