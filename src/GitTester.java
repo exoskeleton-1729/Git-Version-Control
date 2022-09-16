@@ -3,6 +3,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -55,29 +57,38 @@ class GitTester {
 		File file2 = makeFile("second.txt", "Second file test content");
 		File file3 = makeFile("third.txt", "This confers essentially no additional benefit from just having two test files but idk man i like having stuff in groups of three");
 		
-		File indexFile = new File("./tests/index");
-		
+		Path indexFile = Path.of("./tests/index");
+				
 		idx.add("first.txt");
 		String firstSHA = idx.indeces.get("first.txt");
 		File firstBlob = new File("./tests/objects/" + firstSHA);
 		assertTrue(firstBlob.exists());
+		assertTrue(Files.readString(indexFile).contains("first.txt : "+idx.indeces.get("first.txt")));
 		
 		idx.add("second.txt");
 		String secondSHA = idx.indeces.get("second.txt");
 		File secondBlob = new File("./tests/objects/" + secondSHA);
 		assertTrue(secondBlob.exists());
+		assertTrue(Files.readString(indexFile).contains("first.txt : "+idx.indeces.get("first.txt")) && Files.readString(indexFile).contains("second.txt : "+idx.indeces.get("second.txt")));
 		
 		idx.add("third.txt");
-		String thirdSHA = idx.indeces.get("first.txt");
+		String thirdSHA = idx.indeces.get("third.txt");
 		File thirdBlob = new File("./tests/objects/" + thirdSHA);
 		assertTrue(thirdBlob.exists());
+		assertTrue(Files.readString(indexFile).contains("first.txt : "+idx.indeces.get("first.txt")) && Files.readString(indexFile).contains("second.txt : "+idx.indeces.get("second.txt")) && Files.readString(indexFile).contains("third.txt : "+idx.indeces.get("third.txt")));
+	}
+	
+	@Test
+	void testRemove() throws Exception {
+		String firstSHA = idx.indeces.get("first.txt");
+		String secondSHA = idx.indeces.get("second.txt");
+		String thirdSHA = idx.indeces.get("third.txt");
 		
-		file1.delete();
-		file2.delete();
-		file3.delete();
+		Path indexFile = Path.of("./tests/index");
 		
-		firstBlob.delete();
-		secondBlob.delete();
-		thirdBlob.delete();
+		idx.remove("first.txt");
+		File firstBlob = new File("./tests/objects/" + firstSHA);
+		assertFalse(firstBlob.exists());
+		assertFalse(Files.readString(indexFile).contains("first.txt : "+idx.indeces.get("first.txt")));
 	}
 }
