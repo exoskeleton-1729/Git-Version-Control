@@ -21,6 +21,7 @@ public class Index {
 		index.getParentFile().mkdirs();
 		index.createNewFile();
 	}
+	
 	public void add(String fileName) throws IOException {
 		Blob blobby=new Blob(fileName);
 		indeces.put(fileName, blobby.getSha1Name());
@@ -31,6 +32,7 @@ public class Index {
 		printer.close();
 		
 	}
+	
 	public void remove(String fileName) throws FileNotFoundException {
 		//remove Blob file
 		File removingThing=new File("./tests/objects/"+indeces.get(fileName));
