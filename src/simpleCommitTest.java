@@ -11,6 +11,7 @@ public class simpleCommitTest {
 			commie.printCommitInfo();
 			Commit commiesKid=new Commit("tests/second.txt","this is child","beanLord",commie);
 			commiesKid.printCommitInfo();
+			commie.printCommitInfo();
 			
 	}
 

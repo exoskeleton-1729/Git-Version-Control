@@ -26,6 +26,9 @@ public class Commit {
 		date=dateObj.toString();
 		author=inputAuthor;
 		parent=theParent;
+		if (parent!=null) {
+			parent.child=this;
+		}
 		
 	}
 	
