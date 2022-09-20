@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 public class Commit {
 	private String pTree;
@@ -15,18 +16,20 @@ public class Commit {
 	private String author;
 	
 	private Commit parent;
-	private Commit other;
+	private Commit child;
 	
 	public Commit(String filename,String inputSummary,String inputAuthor,Commit theParent){
 		pTree=filename;
 		summary=inputSummary;
 		//something with Date Object
+		Date dateObj=new Date();
+		date=dateObj.toString();
 		author=inputAuthor;
 		parent=theParent;
+		
 	}
 	
 	
-
 	public String sha1TreeContent() throws IOException {
 		Path tree=Paths.get(pTree);
 		String treeContent=Files.readString(tree);
@@ -34,7 +37,7 @@ public class Commit {
 	}
 	
 	public String sha1PTreeAndSummary() throws IOException {
-		return encryptThisString(pTree+"\n"+summary);
+		return encryptThisString(summary+date+author+parent);
 	}
 	
 	public String getDate() {
@@ -42,16 +45,35 @@ public class Commit {
 	}
 	
 	public void printCommitInfo() throws IOException {
-		File infoFile=new File("./objects/commit");
+		File infoFile=new File("tests/objects/"+sha1PTreeAndSummary());
 		infoFile.createNewFile();
 		PrintWriter printer=new PrintWriter(infoFile);
 		printer.println(pTree);
 		
-		printer.print(false);
+		if(this.parent==null) {
+			printer.println();
+		}else {
+			printer.println(this.parent);
+		}
+		
+		if(this.child==null) {
+			printer.println();
+		}else {
+			printer.println(this.child);
+		}
+		
+		printer.println(author);
+		
+		printer.println(date);
+		
+		printer.println(summary);
 		
 		printer.close();
 	}
 	
+	public String toString() {
+		return pTree;
+	}
 	
 	
 	private static String encryptThisString(String input)// from geeksforgeeks
