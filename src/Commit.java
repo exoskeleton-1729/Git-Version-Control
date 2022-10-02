@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
@@ -7,10 +10,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Commit {
-	private String pTree;
+	private Tree tree;
 	private String summary;
 	private String date;
 	private String author;
@@ -18,25 +22,40 @@ public class Commit {
 	private Commit parent;
 	private Commit child;
 	
-	public Commit(String filename,String inputSummary,String inputAuthor,Commit theParent){
-		pTree=filename;
-		summary=inputSummary;
-		//something with Date Object
-		Date dateObj=new Date();
-		date=dateObj.toString();
-		author=inputAuthor;
-		parent=theParent;
-		if (parent!=null) {
-			parent.child=this;
-		}
+	public Commit(String inputSummary, String inputAuthor, Commit theParent) throws Exception {
+		// Sets variables according to inputs
+		summary = inputSummary;
+		Date dateObj = new Date();
+		date = dateObj.toString();
+		author = inputAuthor;
+		parent = theParent;
 		
+		// If there is a parent already, makes this commit the child.
+		if (parent != null)
+			parent.child = this;
+		
+		// Read the index file
+		BufferedReader reader = new BufferedReader(new FileReader("index"));
+		ArrayList <String> contents = new ArrayList<String>();
+		String read;
+		while (reader.ready())
+		{
+			// Note to self will need to change this once on Honors Track Step 1
+			read = reader.readLine();
+			String fileName = read.substring(0, read.indexOf(':') - 1);
+			String SHA1 = read.substring(read.indexOf(':') + 2);
+			contents.add("blob : " + SHA1 + " " + fileName);
+			
+		}
+		reader.close();
+		tree = new Tree(contents);
 	}
 	
 	
 	public String sha1TreeContent() throws IOException {
-		Path tree=Paths.get(pTree);
-		String treeContent=Files.readString(tree);
-		return encryptThisString(treeContent);
+		//Path tree=Paths.get(pTree);
+		//String treeContent=Files.readString(tree);
+		//return encryptThisString(treeContent);
 	}
 	
 	public String sha1PTreeAndSummary() throws IOException {
@@ -51,7 +70,7 @@ public class Commit {
 		File infoFile=new File("tests/objects/"+sha1PTreeAndSummary());
 		infoFile.createNewFile();
 		PrintWriter printer=new PrintWriter(infoFile);
-		printer.println(pTree);
+		//printer.println(pTree);
 		
 		if(this.parent==null) {
 			printer.println();
@@ -75,7 +94,7 @@ public class Commit {
 	}
 	
 	public String toString() {
-		return pTree;
+		//return pTree;
 	}
 	
 	
@@ -100,11 +119,9 @@ public class Commit {
 			while (hashtext.length() < 32) {
 				hashtext = "0" + hashtext;
 			}
-
 			// return the HashText
 			return hashtext;
 		}
-
 		// For specifying wrong message digest algorithms
 		catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
