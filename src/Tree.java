@@ -7,6 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class Tree {
+	
+	public String fileName;
+	
 	public Tree(ArrayList<String> input) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		
@@ -14,6 +17,7 @@ public class Tree {
 			sb.append(s + "\n");
 		}
 		
+		fileName = hash(sb.toString());
 		File tree = new File("./tests/objects/" + hash(sb.toString()));
 		tree.createNewFile();
 		PrintWriter pw = new PrintWriter(tree);

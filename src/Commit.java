@@ -47,6 +47,12 @@ public class Commit {
 			contents.add("blob : " + SHA1 + " " + fileName);
 			
 		}
+		
+		if(parent != null)
+		{
+			contents.add("tree : " + parent.tree.fileName);
+		}
+		
 		reader.close();
 		tree = new Tree(contents);
 	}
@@ -60,6 +66,11 @@ public class Commit {
 	
 	public String sha1PTreeAndSummary() throws IOException {
 		return encryptThisString(summary+date+author+parent);
+	}
+	
+	public Tree getTree()
+	{
+		return tree;
 	}
 	
 	public String getDate() {
