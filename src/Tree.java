@@ -18,7 +18,7 @@ public class Tree {
 		}
 		
 		fileName = hash(sb.toString());
-		File tree = new File("./tests/objects/" + hash(sb.toString()));
+		File tree = new File(hash(sb.toString()));
 		tree.createNewFile();
 		PrintWriter pw = new PrintWriter(tree);
 		pw.write(sb.toString());

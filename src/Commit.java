@@ -35,7 +35,7 @@ public class Commit {
 			parent.child = this;
 		
 		// Read the index file
-		BufferedReader reader = new BufferedReader(new FileReader("index"));
+		BufferedReader reader = new BufferedReader(new FileReader("./tests/index"));
 		ArrayList <String> contents = new ArrayList<String>();
 		String read;
 		while (reader.ready())
@@ -59,9 +59,9 @@ public class Commit {
 	
 	
 	public String sha1TreeContent() throws IOException {
-		//Path tree=Paths.get(pTree);
-		//String treeContent=Files.readString(tree);
-		//return encryptThisString(treeContent);
+		Path treePath = Paths.get(tree.fileName);
+		String treeContent = Files.readString(treePath);
+		return encryptThisString(treeContent);
 	}
 	
 	public String sha1PTreeAndSummary() throws IOException {
@@ -78,10 +78,10 @@ public class Commit {
 	}
 	
 	public void printCommitInfo() throws IOException {
-		File infoFile=new File("tests/objects/"+sha1PTreeAndSummary());
+		File infoFile = new File("tests/objects/"+sha1PTreeAndSummary());
 		infoFile.createNewFile();
 		PrintWriter printer=new PrintWriter(infoFile);
-		//printer.println(pTree);
+		printer.println(tree.fileName);
 		
 		if(this.parent==null) {
 			printer.println();
@@ -94,7 +94,6 @@ public class Commit {
 		}else {
 			printer.println(this.child);
 		}
-		
 		printer.println(author);
 		
 		printer.println(date);
@@ -102,10 +101,6 @@ public class Commit {
 		printer.println(summary);
 		
 		printer.close();
-	}
-	
-	public String toString() {
-		//return pTree;
 	}
 	
 	

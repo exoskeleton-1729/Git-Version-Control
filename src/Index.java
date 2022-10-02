@@ -35,7 +35,7 @@ public class Index {
 	
 	public void remove(String fileName) throws FileNotFoundException {
 		//remove Blob file
-		File removingThing=new File("./tests/objects/"+indeces.get(fileName));
+		File removingThing = new File("./tests/objects/"+indeces.get(fileName));
 		System.out.println(removingThing.exists());
 		removingThing.delete();
 		
