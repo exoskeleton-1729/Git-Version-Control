@@ -59,7 +59,7 @@ public class Commit {
 		tree = new Tree(contents);
 		
 		// Clears index file
-		File file = new File("index");
+		File file = new File("./tests/index");
 		PrintWriter pw = new PrintWriter(file);
 		pw.write("");
 		pw.close();
