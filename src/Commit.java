@@ -18,43 +18,23 @@ public class Commit {
 	private String summary;
 	private String date;
 	private String author;
-	
+	private String pTree;
 	private Commit parent;
 	private Commit child;
 	
 	public Commit(String inputSummary, String inputAuthor, Commit theParent) throws Exception {
+		// Setting parent and child
+		if(theParent != null)
+			parent = theParent;
+		else
+			parent = null;
+		child = null;
+		
 		// Sets variables according to inputs
 		summary = inputSummary;
+		author = inputAuthor;
 		Date dateObj = new Date();
 		date = dateObj.toString();
-		author = inputAuthor;
-		parent = theParent;
-		
-		// If there is a parent already, makes this commit the child.
-		if (parent != null)
-			parent.child = this;
-		
-		// Read the index file
-		BufferedReader reader = new BufferedReader(new FileReader("./tests/index"));
-		ArrayList <String> contents = new ArrayList<String>();
-		String read;
-		while (reader.ready())
-		{
-			// Note to self will need to change this once on Honors Track Step 1
-			read = reader.readLine();
-			String fileName = read.substring(0, read.indexOf(':') - 1);
-			String SHA1 = read.substring(read.indexOf(':') + 2);
-			contents.add("blob : " + SHA1 + " " + fileName);
-			
-		}
-		
-		if(parent != null)
-		{
-			contents.add("tree : " + parent.tree.fileName);
-		}
-		
-		reader.close();
-		tree = new Tree(contents);
 	}
 	
 	
@@ -68,9 +48,9 @@ public class Commit {
 		return encryptThisString(summary+date+author+parent);
 	}
 	
-	public Tree getTree()
+	public String getTree()
 	{
-		return tree;
+		return pTree;
 	}
 	
 	public String getDate() {
