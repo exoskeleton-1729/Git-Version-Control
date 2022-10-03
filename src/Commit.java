@@ -35,6 +35,35 @@ public class Commit {
 		author = inputAuthor;
 		Date dateObj = new Date();
 		date = dateObj.toString();
+		
+		// Read the index file
+		BufferedReader reader = new BufferedReader(new FileReader("./tests/index"));
+		ArrayList <String> contents = new ArrayList<String>();
+		String read;
+		while (reader.ready())
+		{
+			read = reader.readLine();
+			String fileName = read.substring(0, read.indexOf(':') - 1);
+			String SHA1 = read.substring(read.indexOf(':') + 2);
+			contents.add("blob : " + SHA1 + " " + fileName);
+			
+		}
+		
+		if(parent != null)
+		{
+			contents.add("tree : " + parent.tree.fileName);
+		}
+		
+		// Makes the tree
+		reader.close();
+		tree = new Tree(contents);
+		
+		// Clears index file
+		File file = new File("index");
+		PrintWriter pw = new PrintWriter(file);
+		pw.write("");
+		pw.close();
+		
 	}
 	
 	
