@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Index {
 	
-	private HashMap<String,String> indeces=new HashMap<String,String>();
+	private HashMap<String,String> indeces = new HashMap<String,String>();
 	private File index;
 	
 	public Index() {
@@ -71,6 +71,15 @@ public class Index {
 		// Actually deletes the file
 		File file = new File(fileName);
 		file.delete();
+		
+		// Updates HashMap
+		indeces.put(fileName, null);
+	}
+	
+	// Returns true if the specific file has been deleted.
+	public boolean isGone(String fileName)
+	{
+		return(indeces.get(fileName) == null);
 	}
 	
 }

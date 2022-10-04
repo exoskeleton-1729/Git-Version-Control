@@ -42,9 +42,16 @@ public class Commit {
 		while (reader.ready())
 		{
 			read = reader.readLine();
-			String fileName = read.substring(0, read.indexOf(':') - 1);
-			String SHA1 = read.substring(read.indexOf(':') + 2);
-			contents.add("blob : " + SHA1 + " " + fileName);
+			if(read.contains("null"))
+			{
+				
+			}
+			else
+			{
+				String fileName = read.substring(0, read.indexOf(':') - 1);
+				String SHA1 = read.substring(read.indexOf(':') + 2);
+				contents.add("blob : " + SHA1 + " " + fileName);
+			}
 			
 		}
 		
