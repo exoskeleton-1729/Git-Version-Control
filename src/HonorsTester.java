@@ -192,6 +192,9 @@ class HonorsTester {
 		
 		// Fifth Commit
 		ind.add("f9.txt");
+		ind.delete("f9.txt");
+		File f9 = new File("f9.txt");
+		assertTrue(!f9.exists());
 		
 		Commit c5 = new Commit("Ready to debut Twice!", "JYP Entertainment", c4);
 		c5.printCommitInfo();
@@ -204,6 +207,10 @@ class HonorsTester {
 		System.out.println(c3.sha1PTreeAndSummary());
 		System.out.println(c4.sha1PTreeAndSummary());
 		System.out.println(c5.sha1PTreeAndSummary());
+		
+		// Expected output of final tree should be as follows:
+		// Listed: f1, f3, f4, f6, f8
+		// Not Listed: f2, f5, f7, f9
 		
 	}
 

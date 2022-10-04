@@ -1,0 +1,8 @@
+blob : 7449f8c11022cfd458b91e94dc84d8e02a5746a4 f4.txt
+blob : 7449f8c11022cfd458b91e94dc84d8e02a5746a4 f1.txt
+blob : 7449f8c11022cfd458b91e94dc84d8e02a5746a4 *deleted* f2.txt
+f3.txt
+blob : 7449f8c11022cfd458b91e94dc84d8e02a5746a4 *edited* f5.txt
+f8.txt
+blob : 7449f8c11022cfd458b91e94dc84d8e02a5746a4 f6.txt
+tree : 17498a98b67fb9e015ce0af6444dd14b76e02a2a
