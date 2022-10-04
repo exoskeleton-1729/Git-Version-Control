@@ -54,8 +54,17 @@ public class Index {
 	
 	public void delete(String fileName) throws IOException
 	{
+		// Scans the whole index file
+		Scanner scan = new Scanner(index);
+		String fileContents = "";
+		
+		while(scan.hasNextLine())
+			fileContents += scan.nextLine();
+		scan.close();
+		
+		// Appends the *delete* to the end
 		FileWriter fw = new FileWriter(index);
-		fw.append("*deleted* " + fileName);
+		fw.append(fileContents + "*deleted* " + fileName);
 		fw.close();
 	}
 	
