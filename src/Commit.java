@@ -68,7 +68,10 @@ public class Commit {
 		PrintWriter pw = new PrintWriter(file);
 		pw.write("");
 		pw.close();
-		
+
+		PrintWriter hw = new PrintWriter("./tests/HEAD");
+		hw.write(this.sha1PTreeAndSummary());
+		hw.close();
 	}
 	
 	
