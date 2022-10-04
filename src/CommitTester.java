@@ -189,6 +189,7 @@ class CommitTester {
 		ind.delete("f7.txt");
 		File f7 = new File("f7.txt");
 		assertTrue(!f7.exists());
+		ind.edit("f6.txt");
 		
 		// Fourth Commit
 		ind.add("f8.txt");

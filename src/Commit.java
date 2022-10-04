@@ -42,17 +42,12 @@ public class Commit {
 		while (reader.ready())
 		{
 			read = reader.readLine();
-			if(read.contains("null"))
-			{
-				
-			}
-			else
+			if(!read.contains("null"))
 			{
 				String fileName = read.substring(0, read.indexOf(':') - 1);
 				String SHA1 = read.substring(read.indexOf(':') + 2);
 				contents.add("blob : " + SHA1 + " " + fileName);
 			}
-			
 		}
 		
 		if(parent != null)

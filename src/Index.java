@@ -72,14 +72,28 @@ public class Index {
 		File file = new File(fileName);
 		file.delete();
 		
-		// Updates HashMap
+		// Updates HashMap with "null", which can be later identified in Commit as a sign that the file has been deleted
 		indeces.put(fileName, null);
 	}
 	
-	// Returns true if the specific file has been deleted.
-	public boolean isGone(String fileName)
+	public void edit(String fileName) throws IOException
 	{
-		return(indeces.get(fileName) == null);
+		remove(fileName);
+		// Scans the whole index file
+		Scanner scan = new Scanner(index);
+		String fileContents = "";
+		
+		while(scan.hasNextLine())
+			fileContents += scan.nextLine() + "\n";
+		scan.close();
+		
+		// Appends the *edit* to the end
+		FileWriter fw = new FileWriter(index);
+		fw.append(fileContents + "*edited* " + fileName);
+		fw.close();
+		
+		// Updates HashMap with "null", which can be later identified in Commit as a sign that the file has been deleted
+		indeces.put(fileName, null);
 	}
 	
 }
