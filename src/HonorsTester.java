@@ -153,10 +153,10 @@ class HonorsTester {
 		ind.add("f4.txt");
 		ind.delete("f1.txt");
 		ind.delete("f2.txt");
-//		File f1 = new File("f1.txt");
-//		assertTrue(!f1.exists());
-//		File f2 = new File("f2.txt");
-//		assertTrue(!f2.exists());
+		File f1 = new File("f1.txt");
+		assertTrue(!f1.exists());
+		File f2 = new File("f2.txt");
+		assertTrue(!f2.exists());
 		
 		Commit c2 = new Commit("Adding in some Main Dancers.", "JYP Entertainment", c1);
 		c2.printCommitInfo();
@@ -166,8 +166,8 @@ class HonorsTester {
 		// Third Commit
 		ind.add("f5.txt");
 		ind.add("f6.txt");
-		// ind.edit("f5.txt");
-		// ind.edit("f6.txt");
+		ind.edit("f5.txt");
+		ind.edit("f6.txt");
 		
 		Commit c3 = new Commit("Adding in more international members.", "JYP Entertainment", c2);
 		c3.printCommitInfo();
@@ -177,7 +177,7 @@ class HonorsTester {
 		
 		
 		// Fourth Commit
-		// ind.add("f6.txt");
+		ind.add("f6.txt");
 		// ind.add("f1.txt");
 		ind.add("f7.txt");
 		// ind.delete("f7.txt");
