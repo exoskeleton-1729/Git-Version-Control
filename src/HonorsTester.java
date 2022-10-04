@@ -151,8 +151,8 @@ class HonorsTester {
 		// Second Commit
 		ind.add("f3.txt");
 		ind.add("f4.txt");
-		// ind.delete("f1.txt");
-//		ind.delete("f2.txt");
+		ind.delete("f1.txt");
+		ind.delete("f2.txt");
 //		File f1 = new File("f1.txt");
 //		assertTrue(!f1.exists());
 //		File f2 = new File("f2.txt");

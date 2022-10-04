@@ -36,9 +36,9 @@ public class Index {
 			if(entry.getValue() != null)
 				printer.print(entry.getKey() + " : " + entry.getValue()+"\n");
 			else if(deleted.contains(entry.getKey()))
-				printer.print("*deleted* " + entry.getKey());
+				printer.print("*deleted* " + entry.getKey()+"\n");
 			else
-				printer.print("*edited* " + entry.getKey());
+				printer.print("*edited* " + entry.getKey()+"\n");
 		}
 		printer.close();
 		
@@ -56,9 +56,9 @@ public class Index {
 			if(entry.getValue() != null)
 				printer.print(entry.getKey() + " : " + entry.getValue()+"\n");
 			else if(deleted.contains(entry.getKey()))
-				printer.print("*deleted* " + entry.getKey());
+				printer.print("*deleted* " + entry.getKey()+"\n");
 			else
-				printer.print("*edited* " + entry.getKey());
+				printer.print("*edited* " + entry.getKey()+"\n");
 		}
 		printer.close();
 		
