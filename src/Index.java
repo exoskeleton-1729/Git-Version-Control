@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 
 public class Index {
 	
+	private ArrayList<String> deleted = new ArrayList<String>();
 	private HashMap<String,String> indeces = new HashMap<String,String>();
 	private File index;
 	
@@ -31,7 +33,12 @@ public class Index {
 		indeces.put(fileName, blobby.getSha1Name());
 		PrintWriter printer=new PrintWriter(new File("./tests/index"));
 		for (Map.Entry<String, String> entry : indeces.entrySet()) {
-			printer.print(entry.getKey() + " : " + entry.getValue()+"\n");
+			if(entry.getValue() != null)
+				printer.print(entry.getKey() + " : " + entry.getValue()+"\n");
+			else if(deleted.contains(entry.getKey()))
+				printer.print("*deleted* " + entry.getKey());
+			else
+				printer.print("*edited* " + entry.getKey());
 		}
 		printer.close();
 		
@@ -46,7 +53,12 @@ public class Index {
 		indeces.remove(fileName);
 		PrintWriter printer=new PrintWriter(new File("./tests/index"));
 		for (Map.Entry<String, String> entry : indeces.entrySet()) {
-			printer.print(entry.getKey() + " : " + entry.getValue()+"\n");
+			if(entry.getValue() != null)
+				printer.print(entry.getKey() + " : " + entry.getValue()+"\n");
+			else if(deleted.contains(entry.getKey()))
+				printer.print("*deleted* " + entry.getKey());
+			else
+				printer.print("*edited* " + entry.getKey());
 		}
 		printer.close();
 		
@@ -68,9 +80,10 @@ public class Index {
 		fw.append(fileContents + "*deleted* " + fileName);
 		fw.close();
 		
-		// Actually deletes the file
+		// Actually deletes the file and keeps track of its name
 		File file = new File(fileName);
 		file.delete();
+		deleted.add(fileName);
 		
 		// Updates HashMap with "null", which can be later identified in Commit as a sign that the file has been deleted
 		indeces.put(fileName, null);

@@ -42,7 +42,7 @@ public class Commit {
 		while (reader.ready())
 		{
 			read = reader.readLine();
-			if(!read.contains("null"))
+			if(read.contains(":"))
 			{
 				String fileName = read.substring(0, read.indexOf(':') - 1);
 				String SHA1 = read.substring(read.indexOf(':') + 2);
