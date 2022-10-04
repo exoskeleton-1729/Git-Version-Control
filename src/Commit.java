@@ -24,13 +24,9 @@ public class Commit {
 	
 	public Commit(String inputSummary, String inputAuthor, Commit theParent) throws Exception {
 		// Setting parent and child
+		parent = theParent;
 		if(theParent != null)
-		{
-			parent = theParent;
 			parent.setChild(this);
-		}
-		else
-			parent = null;
 		child = null;
 		
 		// Sets variables according to inputs
