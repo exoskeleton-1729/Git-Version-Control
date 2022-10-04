@@ -92,7 +92,7 @@ public class Commit {
 		File infoFile = new File("tests/objects/"+sha1PTreeAndSummary());
 		infoFile.createNewFile();
 		PrintWriter printer=new PrintWriter(infoFile);
-		printer.println(tree.fileName);
+		printer.println("objects/" + tree.fileName);
 		
 		if(this.parent==null) {
 			printer.println();

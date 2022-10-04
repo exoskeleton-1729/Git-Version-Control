@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -100,6 +101,14 @@ class CommitTester {
 		c1.printCommitInfo();
 		File cf1 = new File("./tests/objects/" + c1.sha1PTreeAndSummary());
 		assertTrue(cf1.exists());
+		
+		// Checking if it points to the right tree
+		Scanner scan = new Scanner(cf1);
+		String t1 = scan.nextLine();
+		scan.close();
+		
+		assertTrue(t1.contains("objects/23de61753934f2f6710e3e2288a320a4817f5b6"));
+		
 		
 	}
 
