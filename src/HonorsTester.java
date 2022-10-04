@@ -151,12 +151,12 @@ class HonorsTester {
 		// Second Commit
 		ind.add("f3.txt");
 		ind.add("f4.txt");
-		ind.delete("f1.txt");
-		ind.delete("f2.txt");
-		File f1 = new File("f1.txt");
-		assertTrue(!f1.exists());
-		File f2 = new File("f2.txt");
-		assertTrue(!f2.exists());
+		// ind.delete("f1.txt");
+//		ind.delete("f2.txt");
+//		File f1 = new File("f1.txt");
+//		assertTrue(!f1.exists());
+//		File f2 = new File("f2.txt");
+//		assertTrue(!f2.exists());
 		
 		Commit c2 = new Commit("Adding in some Main Dancers.", "JYP Entertainment", c1);
 		c2.printCommitInfo();
@@ -166,8 +166,8 @@ class HonorsTester {
 		// Third Commit
 		ind.add("f5.txt");
 		ind.add("f6.txt");
-		ind.edit("f5.txt");
-		ind.edit("f6.txt");
+		// ind.edit("f5.txt");
+		// ind.edit("f6.txt");
 		
 		Commit c3 = new Commit("Adding in more international members.", "JYP Entertainment", c2);
 		c3.printCommitInfo();
@@ -177,12 +177,12 @@ class HonorsTester {
 		
 		
 		// Fourth Commit
-		ind.add("f6.txt");
-		ind.add("f1.txt");
+		// ind.add("f6.txt");
+		// ind.add("f1.txt");
 		ind.add("f7.txt");
-		ind.delete("f7.txt");
-		File f7 = new File("f7.txt");
-		assertTrue(!f7.exists());
+		// ind.delete("f7.txt");
+		// File f7 = new File("f7.txt");
+		// assertTrue(!f7.exists());
 		ind.add("f8.txt");
 		
 		Commit c4 = new Commit("Finally adding some rappers to complete Twice!", "JYP Entertainment", c3);
@@ -192,9 +192,9 @@ class HonorsTester {
 		
 		// Fifth Commit
 		ind.add("f9.txt");
-		ind.delete("f9.txt");
-		File f9 = new File("f9.txt");
-		assertTrue(!f9.exists());
+		// ind.delete("f9.txt");
+		// File f9 = new File("f9.txt");
+		// assertTrue(!f9.exists());
 		
 		Commit c5 = new Commit("Ready to debut Twice!", "JYP Entertainment", c4);
 		c5.printCommitInfo();
