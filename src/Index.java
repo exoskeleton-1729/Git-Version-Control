@@ -1,14 +1,18 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Scanner;
 
 
 public class Index {
-	HashMap<String,String> indeces=new HashMap<String,String>();
+	
+	private HashMap<String,String> indeces=new HashMap<String,String>();
+	private File index;
 	
 	public Index() {
 		
@@ -17,7 +21,7 @@ public class Index {
 	public void init() throws IOException {
 		File objects=new File("./tests/objects");
 		objects.mkdir();
-		File index=new File("./tests/index");
+		index = new File("./tests/index");
 		index.getParentFile().mkdirs();
 		index.createNewFile();
 	}
@@ -46,6 +50,13 @@ public class Index {
 		}
 		printer.close();
 		
+	}
+	
+	public void delete(String fileName) throws IOException
+	{
+		FileWriter fw = new FileWriter(index);
+		fw.append("*deleted* " + fileName);
+		fw.close();
 	}
 	
 }
