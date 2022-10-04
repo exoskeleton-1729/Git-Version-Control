@@ -54,6 +54,7 @@ public class Index {
 	
 	public void delete(String fileName) throws IOException
 	{
+		remove(fileName);
 		// Scans the whole index file
 		Scanner scan = new Scanner(index);
 		String fileContents = "";
