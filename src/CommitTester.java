@@ -203,8 +203,6 @@ class CommitTester {
 		s4.close();
 		
 		assertTrue(t4.contains("objects/b89e7067c9bb96e9709e19870fd7e8ed9d7f4bc8"));
-		
-		
 	}
 
 }
