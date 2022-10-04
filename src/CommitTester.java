@@ -207,6 +207,10 @@ class CommitTester {
 		System.out.println(c2.sha1PTreeAndSummary());
 		System.out.println(c3.sha1PTreeAndSummary());
 		System.out.println(c4.sha1PTreeAndSummary());
+		
+		ind.delete("f9.txt");
+		File f9 = new File("f9.txt");
+		assertTrue(!f9.exists());
 	}
 
 }
