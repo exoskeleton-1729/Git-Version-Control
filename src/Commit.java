@@ -20,12 +20,15 @@ public class Commit {
 	private String author;
 	private String pTree;
 	private Commit parent;
-	private Commit child;
+	public Commit child;
 	
 	public Commit(String inputSummary, String inputAuthor, Commit theParent) throws Exception {
 		// Setting parent and child
 		if(theParent != null)
+		{
 			parent = theParent;
+			parent.setChild(this);
+		}
 		else
 			parent = null;
 		child = null;
@@ -53,6 +56,8 @@ public class Commit {
 		{
 			contents.add("tree : " + parent.tree.fileName);
 			pTree = parent.sha1TreeContent();
+			parent.setChild(this);
+			parent.printCommitInfo();
 		}
 		
 		// Makes the tree
@@ -88,6 +93,10 @@ public class Commit {
 		return date;
 	}
 	
+	public void setChild(Commit c) {
+		child = c;
+	}
+	
 	public void printCommitInfo() throws IOException {
 		File infoFile = new File("tests/objects/"+sha1PTreeAndSummary());
 		infoFile.createNewFile();
@@ -97,13 +106,13 @@ public class Commit {
 		if(this.parent==null) {
 			printer.println();
 		}else {
-			printer.println(this.toString());
+			printer.println("objects/" + this.toString());
 		}
 		
 		if(this.child==null) {
 			printer.println();
 		}else {
-			printer.println(this.child);
+			printer.println("objects/" + this.child);
 		}
 		printer.println(author);
 		
