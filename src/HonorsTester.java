@@ -208,10 +208,6 @@ class HonorsTester {
 		System.out.println(c4.sha1PTreeAndSummary());
 		System.out.println(c5.sha1PTreeAndSummary());
 		
-		// Expected output of final tree should be as follows:
-		// Listed: f1, f3, f4, f6, f8
-		// Not Listed: f2, f5, f7, f9
-		
 	}
 
 }
