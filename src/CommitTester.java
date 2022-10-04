@@ -176,7 +176,6 @@ class CommitTester {
 		
 		Commit c3 = new Commit("Adding in more international members.", "JYP Entertainment", c2);
 		c3.printCommitInfo();
-		System.out.println(c3.sha1PTreeAndSummary());
 		File cf3 = new File("./tests/objects/" + c3.sha1PTreeAndSummary());
 		assertTrue(cf3.exists());
 		
@@ -193,7 +192,6 @@ class CommitTester {
 		
 		Commit c4 = new Commit("Finally adding some rappers to complete Twice!", "JYP Entertainment", c3);
 		c4.printCommitInfo();
-		System.out.println(c4.sha1PTreeAndSummary());
 		File cf4 = new File("./tests/objects/" + c4.sha1PTreeAndSummary());
 		assertTrue(cf4.exists());
 		
@@ -203,6 +201,12 @@ class CommitTester {
 		s4.close();
 		
 		assertTrue(t4.contains("objects/b89e7067c9bb96e9709e19870fd7e8ed9d7f4bc8"));
+		
+		// For screenshots
+		System.out.println(c1.sha1PTreeAndSummary());
+		System.out.println(c2.sha1PTreeAndSummary());
+		System.out.println(c3.sha1PTreeAndSummary());
+		System.out.println(c4.sha1PTreeAndSummary());
 	}
 
 }
