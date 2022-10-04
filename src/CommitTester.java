@@ -19,37 +19,46 @@ class CommitTester {
 		File f2 = new File("f2.txt");
 		File f3 = new File("f3.txt");
 		File f4 = new File("f4.txt");
+		File f5 = new File("f5.txt");
 		
 		f1.createNewFile();
 		f2.createNewFile();
 		f3.createNewFile();	
 		f4.createNewFile();
+		f5.createNewFile();
 		
 		// Writes to the files
 		try
 		{
-			Files.writeString(Paths.get("f1.txt"), "Solar", StandardCharsets.ISO_8859_1);
+			Files.writeString(Paths.get("f1.txt"), "Yeji", StandardCharsets.ISO_8859_1);
 		}
 		catch (IOException io) {
 			System.out.println("Tragically, trying to write to the file did not work.");
 		}
 		try
 		{
-			Files.writeString(Paths.get("f2.txt"), "Moonbyul", StandardCharsets.ISO_8859_1);
+			Files.writeString(Paths.get("f2.txt"), "Lia", StandardCharsets.ISO_8859_1);
 		}
 		catch (IOException io) {
 			System.out.println("Tragically, trying to write to the file did not work.");
 		}
 		try
 		{
-			Files.writeString(Paths.get("f3.txt"), "Wheein", StandardCharsets.ISO_8859_1);
+			Files.writeString(Paths.get("f3.txt"), "Chaeryeong", StandardCharsets.ISO_8859_1);
 		}
 		catch (IOException io) {
 			System.out.println("Tragically, trying to write to the file did not work.");
 		}
 		try
 		{
-			Files.writeString(Paths.get("f4.txt"), "Hwasa", StandardCharsets.ISO_8859_1);
+			Files.writeString(Paths.get("f4.txt"), "Ryujin", StandardCharsets.ISO_8859_1);
+		}
+		catch (IOException io) {
+			System.out.println("Tragically, trying to write to the file did not work.");
+		}
+		try
+		{
+			Files.writeString(Paths.get("f4.txt"), "Yuna", StandardCharsets.ISO_8859_1);
 		}
 		catch (IOException io) {
 			System.out.println("Tragically, trying to write to the file did not work.");
@@ -62,17 +71,36 @@ class CommitTester {
 		File obj2 = new File("f2.txt");
 		File obj3 = new File("f3.txt");
 		File obj4 = new File("f4.txt");
+		File obj5 = new File("f5.txt");
 		
 		// Deleting the files
 		obj1.delete();
 		obj2.delete();
 		obj3.delete();
 		obj4.delete();
+		obj5.delete();
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void test() throws Exception {
+		// Creates index, checks if it exists
+		Index ind = new Index();
+		ind.init();
+		
+		File index = new File("index");
+		assertTrue(index.exists());
+
+		// First Commit
+		ind.add("f1.txt");
+		ind.add("f2.txt");
+		
+		Commit c1 = new Commit("Creating a new girl group!", "JYP Entertainment", null);
+		System.out.println(c1.sha1PTreeAndSummary());
+		System.out.println(c1.sha1PTreeAndSummary());
+		c1.printCommitInfo();
+		File cf1 = new File("./tests/objects/" + c1.sha1PTreeAndSummary());
+		assertTrue(cf1.exists());
+		
 	}
 
 }
