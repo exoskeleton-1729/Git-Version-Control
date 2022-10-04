@@ -59,7 +59,7 @@ public class Index {
 		String fileContents = "";
 		
 		while(scan.hasNextLine())
-			fileContents += scan.nextLine();
+			fileContents += scan.nextLine() + "\n";
 		scan.close();
 		
 		// Appends the *delete* to the end
