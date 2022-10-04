@@ -29,10 +29,12 @@ public class Index {
 	}
 	
 	public void add(String fileName) throws IOException {
-		Blob blobby=new Blob(fileName);
+		HashMap<String, String> toAdd = new HashMap<String, String>();
+		Blob blobby = new Blob(fileName);
 		indeces.put(fileName, blobby.getSha1Name());
+		toAdd.put(fileName, blobby.getSha1Name());
 		PrintWriter printer=new PrintWriter(new File("./tests/index"));
-		for (Map.Entry<String, String> entry : indeces.entrySet()) {
+		for (Map.Entry<String, String> entry : toAdd.entrySet()) {
 			if(entry.getValue() != null)
 				printer.print(entry.getKey() + " : " + entry.getValue()+"\n");
 			else if(deleted.contains(entry.getKey()))
