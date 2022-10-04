@@ -52,11 +52,13 @@ public class Commit {
 		if(parent != null)
 		{
 			contents.add("tree : " + parent.tree.fileName);
+			pTree = parent.sha1TreeContent();
 		}
 		
 		// Makes the tree
 		reader.close();
 		tree = new Tree(contents);
+		
 		
 		// Clears index file
 		File file = new File("./tests/index");
@@ -95,7 +97,7 @@ public class Commit {
 		if(this.parent==null) {
 			printer.println();
 		}else {
-			printer.println(this.parent);
+			printer.println(this.toString());
 		}
 		
 		if(this.child==null) {
@@ -110,6 +112,11 @@ public class Commit {
 		printer.println(summary);
 		
 		printer.close();
+	}
+	
+	public String toString()
+	{
+		return pTree;
 	}
 	
 	
