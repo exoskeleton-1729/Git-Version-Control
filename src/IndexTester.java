@@ -2,7 +2,7 @@ import java.io.IOException;
 
 public class IndexTester {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		Index indy = new Index();
 		indy.init();

@@ -137,6 +137,7 @@ class HonorsTester {
 		File index = new File("index");
 		assertTrue(index.exists());
 
+
 		// First Commit
 		ind.add("f1.txt");
 		ind.add("f2.txt");
@@ -164,6 +165,8 @@ class HonorsTester {
 		assertTrue(cf2.exists());
 		
 		// Third Commit
+		ind.add("f5.txt");
+		ind.delete("f3.txt");
 		ind.add("f5.txt");
 		ind.add("f6.txt");
 		ind.edit("f5.txt");
@@ -206,8 +209,7 @@ class HonorsTester {
 		System.out.println(c2.sha1PTreeAndSummary());
 		System.out.println(c3.sha1PTreeAndSummary());
 		System.out.println(c4.sha1PTreeAndSummary());
-		System.out.println(c5.sha1PTreeAndSummary());
-		
+		System.out.println(c5.sha1PTreeAndSummary());	
 	}
 
 }

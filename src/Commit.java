@@ -12,6 +12,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Commit {
 	private Tree tree;
@@ -21,8 +22,12 @@ public class Commit {
 	private String pTree;
 	private Commit parent;
 	public Commit child;
+	public static HashMap <String, String> trees = new HashMap<String, String>();
 	
 	public Commit(String inputSummary, String inputAuthor, Commit theParent) throws Exception {
+		
+		Index.clearToAdd();
+		
 		// Setting parent and child
 		parent = theParent;
 		if(theParent != null)
@@ -34,10 +39,25 @@ public class Commit {
 		author = inputAuthor;
 		Date dateObj = new Date();
 		date = dateObj.toString();
+		boolean wasModified = false;
 		
 		// Read the index file
 		BufferedReader reader = new BufferedReader(new FileReader("./tests/index"));
 		ArrayList <String> contents = new ArrayList<String>();
+		ArrayList <String> modFileNames = new ArrayList<String>();
+		String theOne = "";
+		
+		if(parent != null)
+		{
+			for(String str : trees.keySet())
+			{
+				if(trees.get(str) == null)
+				{
+					trees.put(str, parent.tree.fileName);
+				}
+			}
+		}
+		
 		String read;
 		while (reader.ready())
 		{
@@ -48,6 +68,13 @@ public class Commit {
 				String SHA1 = read.substring(read.indexOf(':') + 2);
 				contents.add("blob : " + SHA1 + " " + fileName);
 			}
+			else
+			{
+				wasModified = true;
+				int index = read.indexOf('t');
+				String str = read.substring(index + 5);
+				modFileNames.add(str);
+			}
 		}
 		
 		if(parent != null)
@@ -57,6 +84,18 @@ public class Commit {
 			parent.setChild(this);
 			parent.printCommitInfo();
 		}
+//		else if(parent != null && wasModified)
+//		{
+//			for(String str : modFileNames)
+//			{
+//				theOne = str;
+//			}
+//			String correctTreeName = trees.get(theOne);
+//			contents.add("tree : " + correctTreeName);
+//			pTree = parent.sha1TreeContent();
+//			parent.setChild(this);
+//			parent.printCommitInfo();
+//		}
 		
 		// Makes the tree
 		reader.close();

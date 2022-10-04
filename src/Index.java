@@ -14,6 +14,7 @@ public class Index {
 	
 	private ArrayList<String> deleted = new ArrayList<String>();
 	private HashMap<String,String> indeces = new HashMap<String,String>();
+	private static HashMap<String, String> toAdd = new HashMap<String, String>();
 	private File index;
 	
 	public Index() {
@@ -28,8 +29,12 @@ public class Index {
 		index.createNewFile();
 	}
 	
+	public static void clearToAdd()
+	{
+		toAdd.clear();
+	}
+	
 	public void add(String fileName) throws IOException {
-		HashMap<String, String> toAdd = new HashMap<String, String>();
 		Blob blobby = new Blob(fileName);
 		indeces.put(fileName, blobby.getSha1Name());
 		toAdd.put(fileName, blobby.getSha1Name());
@@ -53,8 +58,8 @@ public class Index {
 		removingThing.delete();
 		
 		indeces.remove(fileName);
-		PrintWriter printer=new PrintWriter(new File("./tests/index"));
-		for (Map.Entry<String, String> entry : indeces.entrySet()) {
+		PrintWriter printer = new PrintWriter(new File("./tests/index"));
+		for (Map.Entry<String, String> entry : toAdd.entrySet()) {
 			if(entry.getValue() != null)
 				printer.print(entry.getKey() + " : " + entry.getValue()+"\n");
 			else if(deleted.contains(entry.getKey()))
@@ -66,12 +71,13 @@ public class Index {
 		
 	}
 	
-	public void delete(String fileName) throws IOException
+	public void delete(String fileName) throws Exception
 	{
 		remove(fileName);
 		// Scans the whole index file
 		Scanner scan = new Scanner(index);
 		String fileContents = "";
+		Commit.trees.put(fileName, null);
 		
 		while(scan.hasNextLine())
 			fileContents += scan.nextLine() + "\n";
@@ -97,6 +103,7 @@ public class Index {
 		// Scans the whole index file
 		Scanner scan = new Scanner(index);
 		String fileContents = "";
+		Commit.trees.put(fileName, null);
 		
 		while(scan.hasNextLine())
 			fileContents += scan.nextLine() + "\n";
