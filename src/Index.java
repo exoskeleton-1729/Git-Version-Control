@@ -67,6 +67,10 @@ public class Index {
 		FileWriter fw = new FileWriter(index);
 		fw.append(fileContents + "*deleted* " + fileName);
 		fw.close();
+		
+		// Actually deletes the file
+		File file = new File(fileName);
+		file.delete();
 	}
 	
 }

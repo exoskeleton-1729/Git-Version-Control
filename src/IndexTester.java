@@ -8,6 +8,6 @@ public class IndexTester {
 		indy.init();
 		indy.add("first.txt");
 		indy.add("second.txt");
-		indy.delete("first.txt");
+		indy.delete("second.txt");
 	}
 }
